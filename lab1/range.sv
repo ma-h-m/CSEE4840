@@ -28,7 +28,7 @@ module range
       which should generate running, done, cgo, n, num, we, and din */
     logic [15:0] cnt; 
     logic [15:0] cc;
-   always_ff @(negedge clk) begin
+   always_ff @(posedge clk) begin
       if (go) begin
          running <= 1;
          n <= start;
@@ -41,13 +41,14 @@ module range
       end else if (running) begin
          cgo <= 0;
 
-         we <= 0;
+        //  we <= 0;
          if (cdone) begin
-            din <= cnt;
-            
-            
+            din <= cnt - 1;
+            cdone <= 0;
+            // we <= 1;
             // cnt <= 0;
             if (cc == RAM_WORDS) begin
+            // if (cc == 3) begin
             // if (cc == RAM_ADDR_BITS'(RAM_WORDS - 1)) begin
                running <= 0;
                done <= 1;
@@ -56,8 +57,8 @@ module range
                we <= 1; 
                
                n <= start + { {16{1'b0}}, cc } + 1;
-                cc <= cc + 1;
-                num <= cc[RAM_ADDR_BITS - 1:0];
+               cc <= cc + 1;
+               num <= cc[RAM_ADDR_BITS - 1:0];
                cgo <= 1;
                cnt <= 0;
             end
