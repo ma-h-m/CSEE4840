@@ -46,7 +46,7 @@ module lab1( input logic        CLOCK_50,  // 50 MHz Clock input
 
    range #(256, 8) r (.*); // Only one instance of the range module
    logic [15:0] cc;
-   assign cc = count - 1;
+   assign cc = count;
 
    hex7seg h5(displayed_n[11:8], HEX5);
    hex7seg h4(displayed_n[7:4], HEX4);
