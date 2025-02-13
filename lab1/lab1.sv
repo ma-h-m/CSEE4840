@@ -31,13 +31,27 @@ module lab1( input logic        CLOCK_50,  // 50 MHz Clock input
    always_ff @(posedge clk) begin
         slow_counter <= slow_counter + 1;
    end
+   logic [2:0] cumulate_counter = 0;
+
+//    always_ff @ (posedge ~KEY[0]) begin
+//      if (slow_counter == 0) displayed_n <= displayed_n + 1;
+//    end
+//    always_ff @ (posedge ~KEY[1]) begin
+//      if (slow_counter == 0) displayed_n <= displayed_n - 1;
+//    end
 
    always_ff @ (posedge clk) begin
         if (~KEY[2]) begin
             displayed_n <= n;
         end else begin
-            if (~KEY[0] && slow_counter == 0) displayed_n <= displayed_n + 1; // Increment
-            if (~KEY[1] && slow_counter == 0) displayed_n <= displayed_n - 1; // Decrement
+            if (KEY[0] && KEY[1] ) cumulate_counter <= 0;
+
+	    if( (~KEY[0] || ~KEY[1]) && slow_counter == 0 && cumulate_counter != 3) cumulate_counter <= cumulate_counter + 1;
+            if (~KEY[0] && slow_counter == 0 && cumulate_counter == 0) displayed_n <= displayed_n + 1;
+            if (~KEY[1] && slow_counter == 0 && cumulate_counter == 0) displayed_n <= displayed_n - 1; // Decrement
+            
+            if (~KEY[0] && slow_counter == 0 && cumulate_counter == 3) displayed_n <= displayed_n + 1; // Increment
+            if (~KEY[1] && slow_counter == 0 && cumulate_counter == 3) displayed_n <= displayed_n - 1; // Decrement
         end
    end
 
