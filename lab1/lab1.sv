@@ -2,8 +2,8 @@
 //
 // Spring 2023
 //
-// By: <your name here>
-// Uni: <your uni here>
+// By: Haoming Ma, Roshan Prakash
+// Uni: hm3070,rp3187
 module lab1( input logic        CLOCK_50,  // 50 MHz Clock input
              
              input logic [3:0]  KEY, // Pushbuttons; KEY[0] is rightmost
@@ -23,7 +23,7 @@ module lab1( input logic        CLOCK_50,  // 50 MHz Clock input
    logic [11:0]    n;
    
    assign clk = CLOCK_50;
-   assign go = KEY[3]; // Fixed assign syntax
+   assign go = KEY[3]; 
 
    logic [11:0] displayed_n;
    logic [21:0] slow_counter;
@@ -46,7 +46,7 @@ module lab1( input logic        CLOCK_50,  // 50 MHz Clock input
 
    range #(256, 8) r (.*); // Only one instance of the range module
    logic [15:0] cc;
-   assign cc = count;
+   assign cc = count - 1;
 
    hex7seg h5(displayed_n[11:8], HEX5);
    hex7seg h4(displayed_n[7:4], HEX4);
