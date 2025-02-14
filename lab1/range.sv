@@ -33,6 +33,7 @@ module range
     
       if (go) begin
          running <= 1;
+         done <= 0;
          n <= start;
          num <= 0;
          din <= 0;
@@ -71,7 +72,7 @@ module range
          end
       end else begin
          we <= 0;
-         done <= 0;
+         
       end
    end
 
